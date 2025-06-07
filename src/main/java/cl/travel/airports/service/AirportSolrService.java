@@ -66,6 +66,7 @@ public class AirportSolrService {
         SolrQuery solrQuery = new SolrQuery();
         solrQuery.set("defType", "edismax");
         solrQuery.setQuery(query);
+//        solrQuery.set("qf", "iata name city_code city");
         solrQuery.set("qf", "search_autocomplete");
         solrQuery.setRows(10);
         QueryResponse response = solrClient.query(solrQuery);
@@ -100,7 +101,7 @@ public class AirportSolrService {
     private String getSingle(SolrDocument doc, String fieldName) {
         Object val = doc.getFieldValue(fieldName);
         if (val instanceof List && !((List<?>) val).isEmpty()) {
-            return ((List<?>) val).getFirst().toString();
+            return ((List<?>) val).get(0).toString();
         }
         return val != null ? val.toString() : null;
     }

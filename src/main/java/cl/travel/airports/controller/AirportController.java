@@ -60,9 +60,10 @@ public class AirportController {
             List<Airport> airportsList = csvToBean.parse();
             airportSolrService.upload(airportsList);
         } catch (Exception e) {
-//            throw new RuntimeException(e);
-            e.printStackTrace();
-            return ResponseEntity.status(500).body("Something went wrong...");
+            System.out.println("caught exception");
+            throw new RuntimeException(e);
+//            e.printStackTrace();
+//            return ResponseEntity.status(500).body("Something went wrong...");
         }
 
         return ResponseEntity.status(HttpStatus.OK).body("Data uploaded successfully");
@@ -77,7 +78,7 @@ public class AirportController {
     )
     @Parameters({
             @Parameter(name = "q",
-                    description = "Search expression in the format `field:value`",
+                    description = "Search term",
                     example = "delhi",
                     required = true)
     })
